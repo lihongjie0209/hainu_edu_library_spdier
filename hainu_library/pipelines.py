@@ -7,6 +7,7 @@
 
 from scrapy.exceptions import DropItem
 from pymongo import MongoClient
+from . import settings
 
 class BookItemPipeline(object):
 
@@ -184,19 +185,17 @@ class BookItemPipeline(object):
 
 class MongoPipeline(object):
 
-    collection_name = 'hainu_library'
-
     def __init__(self):
-        self.mongo_uri = 'mongodb://127.0.0.1:27017'
-        self.mongo_db = 'hainu'
+        self.client = MongoClient(settings.Mongo_URI)
+        self.db = self.client[settings.Mongo_Database]
+        self.collection = self.db[settings.Mongo_Collection]
 
     def open_spider(self, spider):
-        self.client = MongoClient(self.mongo_uri)
-        self.db = self.client[self.mongo_db]    
+        self.collection.drop()
 
     def close_spider(self, spider):
         self.client.close()
 
     def process_item(self, item, spider):
-        self.db[self.collection_name].insert(dict(item))
+        self.collection.insert_one(dict(item))
         return item

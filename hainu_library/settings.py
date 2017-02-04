@@ -15,8 +15,9 @@ SPIDER_MODULES = ['hainu_library.spiders']
 NEWSPIDER_MODULE = 'hainu_library.spiders'
 
 # Mongodb Setting
-MongoURI = 'mongodb://127.0.0.1:27017'
-MongoDatabase = 'hainu'
+Mongo_URI = 'mongodb://127.0.0.1:27017'
+Mongo_Database = 'hainu'
+Mongo_Collection = 'hainu_library'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
