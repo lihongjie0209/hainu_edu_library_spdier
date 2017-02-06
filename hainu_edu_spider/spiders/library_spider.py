@@ -7,7 +7,7 @@ from itertools import count
 
 class LibrarySpider(scrapy.Spider):
 
-    name = 'lib_spider'
+    name = 'library'
 
     def start_requests(self):
         urls =('http://210.37.32.7/opac/search?q=*%3A*&rows=100&&page={}'.format(page) for page in count(1))

@@ -2,6 +2,8 @@
 import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
+from ..items import NewsItem, NewsItemLoader
+from scrapy.loader.processors import Compose
 
 
 class NewsSpider(CrawlSpider):
@@ -16,6 +18,12 @@ class NewsSpider(CrawlSpider):
 
     def parse_item(self, response):
         for li in response.xpath('//div[contains(@class, "news_list")]//li'):
-            print(li.xpath('normalize-space()').extract_first())
+            l = NewsItemLoader(item=NewsItem(), response=response, xpath=li)
+            l.add_xpath('title', 'a/text()')
+            l.add_xpath('url', 'a/@href', Compose(response.urljoin))
+            l.add_xpath('date', 'span/text()')
+
+        
+        
 
 
