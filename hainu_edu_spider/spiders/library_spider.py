@@ -1,8 +1,7 @@
 import scrapy
-from scrapy.shell import inspect_response
 from scrapy.loader.processors import TakeFirst, MapCompose
 import json
-from hainu_library.items import BookItem, BookItemLoader
+from ..items import BookItem, BookItemLoader
 from scrapy.exceptions import CloseSpider 
 from itertools import count
 

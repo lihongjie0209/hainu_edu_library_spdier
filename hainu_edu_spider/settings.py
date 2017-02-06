@@ -9,15 +9,14 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'hainu_library'
+BOT_NAME = 'hainu_edu_spider'
 
-SPIDER_MODULES = ['hainu_library.spiders']
-NEWSPIDER_MODULE = 'hainu_library.spiders'
+SPIDER_MODULES = ['hainu_edu_spider.spiders']
+NEWSPIDER_MODULE = 'hainu_edu_spider.spiders'
 
 # Mongodb Setting
 Mongo_URI = 'mongodb://127.0.0.1:27017'
-Mongo_Database = 'hainu'
-Mongo_Collection = 'hainu_library'
+
 
 # logging setting
 

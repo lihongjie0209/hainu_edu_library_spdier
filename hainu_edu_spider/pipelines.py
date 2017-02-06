@@ -188,11 +188,10 @@ class MongoPipeline(object):
 
     def __init__(self):
         self.client = MongoClient(settings.Mongo_URI)
-        self.db = self.client[settings.Mongo_Database]
-        self.collection = self.db[settings.Mongo_Collection]
-
+        self.db = self.client[settings.]
+        
     def open_spider(self, spider):
-        self.collection.drop()
+        self.collection = self.db[spider.name]
 
     def close_spider(self, spider):
         self.client.close()
