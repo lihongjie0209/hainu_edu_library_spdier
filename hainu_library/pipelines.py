@@ -8,6 +8,7 @@
 from scrapy.exceptions import DropItem
 from pymongo import MongoClient
 from . import settings
+import logging 
 
 class BookItemPipeline(object):
 

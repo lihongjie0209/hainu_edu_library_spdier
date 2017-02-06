@@ -3,13 +3,15 @@ from scrapy.shell import inspect_response
 from scrapy.loader.processors import TakeFirst, MapCompose
 import json
 from hainu_library.items import BookItem, BookItemLoader
+from scrapy.exceptions import CloseSpider 
+from itertools import count
 
 class LibrarySpider(scrapy.Spider):
 
     name = 'lib_spider'
 
     def start_requests(self):
-        urls =('http://210.37.32.7/opac/search?q=*%3A*&rows=100&&page={}'.format(page) for page in range(1,3))
+        urls =('http://210.37.32.7/opac/search?q=*%3A*&rows=100&&page={}'.format(page) for page in count(1))
 
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse) 
@@ -17,6 +19,9 @@ class LibrarySpider(scrapy.Spider):
 
     def parse(self, response):
         bookmetas = response.xpath('//div[@class="bookmeta"]')
+        if not bookmetas:
+            self.logger.info('this is last page, spider will close')
+            raise CloseSpider('job done')
         for meta in bookmetas:
             l = BookItemLoader(item=BookItem(), selector=meta, response=response)
             l.add_xpath('_id', '@bookrecno')
@@ -33,6 +38,7 @@ class LibrarySpider(scrapy.Spider):
         l.add_value('holding_list', json_data["holdingList"])
         item = l.load_item()
         yield item
+
 
 
             

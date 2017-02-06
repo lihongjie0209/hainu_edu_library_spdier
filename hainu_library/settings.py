@@ -19,6 +19,11 @@ Mongo_URI = 'mongodb://127.0.0.1:27017'
 Mongo_Database = 'hainu'
 Mongo_Collection = 'hainu_library'
 
+# logging setting
+
+# LOG_FILE = 
+# LOG_LEVEL = 
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'hainu_library (+http://www.yourdomain.com)'
@@ -40,8 +45,6 @@ ROBOTSTXT_OBEY = True
 # Disable cookies (enabled by default)
 #COOKIES_ENABLED = False
 
-# Disable Telnet Console (enabled by default)
-#TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
 #DEFAULT_REQUEST_HEADERS = {
@@ -87,10 +90,4 @@ ITEM_PIPELINES = {
 # Enable showing throttling stats for every response received:
 #AUTOTHROTTLE_DEBUG = False
 
-# Enable and configure HTTP caching (disabled by default)
-# See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-HTTPCACHE_ENABLED = True
-HTTPCACHE_EXPIRATION_SECS = 0
-HTTPCACHE_DIR = 'httpcache'
-HTTPCACHE_IGNORE_HTTP_CODES = []
-HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
