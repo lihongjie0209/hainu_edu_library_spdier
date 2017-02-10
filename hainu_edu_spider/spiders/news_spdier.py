@@ -3,7 +3,8 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from ..items import NewsItem, NewsItemLoader
-from scrapy.loader.processors import Compose
+from scrapy.loader.processors import MapCompose
+from urllib.parse import urljoin
 
 
 class NewsSpider(CrawlSpider):
@@ -12,16 +13,27 @@ class NewsSpider(CrawlSpider):
     start_urls = ['http://www.hainu.edu.cn/stm/vnew/shtml_liebiao.asp@bbsid=2439.shtml']
 
     rules = (
-        Rule(LinkExtractor(allow=r'@bbsid=\d+\.shtml'), follow=True, callback='parse_item'),
-        Rule(LinkExtractor(allow=r'pa='), callback='parse_item', follow=True), 
+        Rule(LinkExtractor(allow=r'#', restrict_xpaths=['//div[@class="liebiao2"]']), callback='parse_item'),
+        Rule(LinkExtractor(restrict_xpaths=['//a[text()=">>"]']), follow=True, callback='next_page'),
     )
 
+
+    # def next_page(self, response):
+    #     print(response.url)
     def parse_item(self, response):
-        for li in response.xpath('//div[contains(@class, "news_list")]//li'):
-            l = NewsItemLoader(item=NewsItem(), response=response, xpath=li)
-            l.add_xpath('title', 'a/text()')
-            l.add_xpath('url', 'a/@href', Compose(response.urljoin))
-            l.add_xpath('date', 'span/text()')
+
+        
+        l = NewsItemLoader(item=NewsItem(), response=response)
+        l.add_xpath('title', '//*[@class="biaoti"]/text()')
+        l.add_value('url', response.url)
+        l.add_xpath('source', '//*[@class="laiyuan"]/text()', re=r'\[ 来源：(.+)\]')
+        l.add_xpath('date', '//*[@class="laiyuan"]/text()', re=r'\d.+')
+        l.add_xpath('keywords', '//*[@name="keywords"]/@content')
+        l.add_xpath('description', '//*[@name="description"]/@content')
+        
+        item = l.load_item()
+        yield item
+        print(item)
 
         
         

@@ -9,11 +9,17 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
+from scrapy.settings.default_settings import *
+
 BOT_NAME = 'hainu_edu_spider'
 
 SPIDER_MODULES = ['hainu_edu_spider.spiders']
 NEWSPIDER_MODULE = 'hainu_edu_spider.spiders'
 
+
+HTTPCACHE_ENABLED = True
+CONCURRENT_REQUESTS = 100
+CONCURRENT_REQUESTS_PER_DOMAIN = 100
 # Mongodb Setting
 Mongo_URI = 'mongodb://127.0.0.1:27017'
 
@@ -28,7 +34,7 @@ Mongo_URI = 'mongodb://127.0.0.1:27017'
 #USER_AGENT = 'hainu_library (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -72,8 +78,8 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'hainu_library.pipelines.BookItemPipeline': 300,
-   'hainu_library.pipelines.MongoPipeline' : 400
+#    'hainu_edu_spider.pipelines.BookItemPipeline': 300,
+   'hainu_edu_spider.pipelines.MongoPipeline' : 400
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -88,5 +94,9 @@ ITEM_PIPELINES = {
 #AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
 # Enable showing throttling stats for every response received:
 #AUTOTHROTTLE_DEBUG = False
+
+
+
+
 
 
