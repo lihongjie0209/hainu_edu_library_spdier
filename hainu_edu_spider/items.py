@@ -25,10 +25,15 @@ class NewsItem(scrapy.Item):
     description = scrapy.Field()
 
 class BaseItemLoader(scrapy.loader.ItemLoader):
+    '''清理数据的基本类
+       默认输入处理器: 去除字符串前后空白字符
+       默认输出处理器: 返回列表结果第一个元素'''
+
     default_input_processor = MapCompose(str.strip)
     default_output_processor = TakeFirst()
 
 class BookItemLoader(BaseItemLoader):
+
     holding_list_in = Identity()
     holding_list_out = Identity()
     
