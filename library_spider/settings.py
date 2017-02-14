@@ -9,12 +9,13 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
+
 from scrapy.settings.default_settings import *
 
-BOT_NAME = 'hainu_edu_spider'
+BOT_NAME = 'library_spider'
 
-SPIDER_MODULES = ['hainu_edu_spider.spiders']
-NEWSPIDER_MODULE = 'hainu_edu_spider.spiders'
+SPIDER_MODULES = ['library_spider.spiders']
+NEWSPIDER_MODULE = 'library_spider.spiders'
 
 # 测试时使用缓存以及高并发访问
 # HTTPCACHE_ENABLED = True
@@ -24,21 +25,12 @@ NEWSPIDER_MODULE = 'hainu_edu_spider.spiders'
 # Mongodb Setting
 Mongo_URI = 'mongodb://127.0.0.1:27017'
 
-
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
-
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-#    'hainu_edu_spider.pipelines.BookItemPipeline': 300,
-   'hainu_edu_spider.pipelines.MongoPipeline' : 400
+    'library_spider.pipelines.BookItemPipeline': 300,
+    'library_spider.pipelines.MongoPipeline': 400
 }
-
-
-
-
-
-
-
